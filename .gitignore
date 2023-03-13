@@ -1,0 +1,5 @@
+data/Excel/**
+data/Readable/**
+data/TextMap/**
+res/**
+utils/__pycache__

@@ -2,12 +2,16 @@ import argparse
 import json
 import os
 import sys
+import io
 
 import utils.questlog as questlog
 import utils.achievements as achiev
 import utils.cooking as cooking
 import utils.weapon as weapons
 import utils.character as chara
+
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 def character(args, textmap):
     if args.ext:
@@ -96,7 +100,7 @@ class argCollector(argparse.Action):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-l", "--lang", type=str, default='EN', choices=['CHR', 'CHT', 'DE', 'EN', 'ES', 'FR', 'ID', 'JA', 'KO', 'PT', 'RU', 'TH', 'VI'])
+    parser.add_argument("-l", "--lang", type=str, default='EN', choices=['CHS', 'CHT', 'DE', 'EN', 'ES', 'FR', 'ID', 'JA', 'KO', 'PT', 'RU', 'TH', 'VI'])
     parser.add_argument("-a", "--all", action="store_true", default=False)
     subparser = parser.add_subparsers(dest='cmd')
 
@@ -130,7 +134,7 @@ if __name__ == '__main__':
     while rest:
         args = parser.parse_args(rest)
 
-        with open(os.path.join(os.path.dirname(__file__), f'data/TextMap/Text{args.lang}.json')) as textmap_json:
+        with open(os.path.join(os.path.dirname(__file__), f'data/TextMap/Text{args.lang}.json'), encoding='utf-8') as textmap_json:
             textmap = json.load(textmap_json)
             if args.all: # If the --all flag is specified, then we don't need to process the other arguments and we extract everything
                 rest = []
